@@ -1,0 +1,42 @@
+plugins {
+    id 'java'
+    id 'idea'
+    id 'jacoco'
+}
+
+group 'nz.co.airnz'
+version '1.0-SNAPSHOT'
+
+/*repositories {
+    mavenCentral()
+}*/
+repositories {
+    maven { url 'http://artifactory.aws-ocm.nz/libs-release'
+        allowInsecureProtocol = true
+    }
+    maven { url 'http://artifactory.aws-ocm.nz/private-libs-release'
+        allowInsecureProtocol = true
+    }
+}
+
+ext {
+    // CSS shared libraries
+    carinaConnectionManagerVersion = '1.5.10'
+    carinaMarkupLanguageVersion = '2.2.3'
+
+    carinaApiVersion = '1.1.182'
+}
+
+dependencies {
+
+    // JAC Dependencies
+    implementation ("nz.co.airnz.css:CarinaConnectionManager:${carinaConnectionManagerVersion}") {
+        exclude group: "org.slf4j"}
+    implementation ("nz.co.airnz.css:carina-markup-language:${carinaMarkupLanguageVersion}") {
+        exclude group: "org.slf4j"}
+    implementation ("nz.co.airnz.se.automation:carina-api:${carinaApiVersion}")
+}
+
+test {
+    useJUnitPlatform()
+}
